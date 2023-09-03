@@ -19,7 +19,7 @@ if (m < 0 || m > 4)
     return;
 }
 
-int[] nMaxValues = new int[5] { 2147483646, 24072, 12036, 11, 0 };
+int[] nMaxValues = new int[5] { 2147483646, 19260, 9629, 11, 0 };
 
 Console.Write($"Введите число (n) в диапазоне [0; {nMaxValues[m]}]: ");
 int n = Convert.ToInt32(Console.ReadLine());
@@ -38,11 +38,9 @@ Console.WriteLine($"Функция Аккермана A(m, n) для A({m}, {n})
 
 int AckermannFunction(int m, int n)
 {
-    while (m != 0) // Условие выхода из рекурсии: m == 0
-    {
-        if (n == 0) n = 1; // m > 0 && n == 0
-        else n = AckermannFunction(m, n - 1); // m > 0 && n > 0
-        m--;
-    }
-    return n + 1; // Место выхода из рекурсии.
+    if (m == 0) return n + 1; // Условие выхода из рекурсии: m == 0
+    if (n == 0) return AckermannFunction(m - 1, 1); // m > 0 && n == 0
+    return AckermannFunction(m - 1, AckermannFunction(m, n - 1)); // m > 0 && n > 0
 }
+
+// PS: Ещё один вариант решения – commit "Task68v1".
